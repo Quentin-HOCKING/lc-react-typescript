@@ -1,21 +1,20 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-import { useState, useEffect } from 'react';
+/* eslint-disable no-console */
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import './App.css';
 import AddWilder from "./component/AddWilder";
-import Wilder from "./Wilder";
+import Wilder, {WilderProps} from "./component/Wilder";
 
 function App(): JSX.Element {
-  const [wilders, setWilders] = useState([]);
+  const [wilders, setWilders] = useState<WilderProps[]>([]);
   useEffect(() => {
     const fetchWilders = async () => {
       try {
         const result = await axios.get('http://localhost:5000/api/wilders');
         console.log(result);
         setWilders(result.data.result);
-      } catch (error) {
-        console.log(error);
+      } catch (error) { 
+        console.log(error); 
       }
     };
     fetchWilders();
@@ -34,7 +33,7 @@ function App(): JSX.Element {
 
         <section className="card-row">
           {wilders.map((wilder) => (
-            <Wilder key={wilder._id} {...wilder} />
+            <Wilder key={wilder._id} name={wilder.name} city={wilder.city} skills={wilder.skills}/>
           ))}
         </section>
         <section>
